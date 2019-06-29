@@ -2,6 +2,7 @@
 
 const { isIPv4 } = require('net')
 const dnsPacket = require('dns-packet')
+const rcodes = require('dns-packet/rcodes')
 
 class BaseServer {
   #resolver
@@ -25,11 +26,7 @@ class BaseServer {
       id: dnsRequest.id,
       type: 'response',
       flags: dnsPacket.AUTHORITATIVE_ANSWER,
-      opcode: 'QUERY',
-      questions: dnsRequest.questions,
-      answers: [],
-      authorities: [],
-      additionals: []
+      questions: dnsRequest.questions
     }
 
     try {
@@ -37,11 +34,10 @@ class BaseServer {
         throw new Error('Only queries are supported')
       }
 
-      response.rcode = 'NOERROR'
       response.answers = await this.#answerQuestions(dnsRequest.questions)
     } catch (e) {
       console.error('Error occurred when resolving answers', e)
-      response.rcode = e instanceof ZoneNotAllowedError ? 'REFUSED' : 'SERVFAIL'
+      response.flags |= rcodes.toRcode(e instanceof ZoneNotAllowedError ? 'REFUSED' : 'SERVFAIL')
     }
 
     return response
@@ -69,10 +65,8 @@ class BaseServer {
     return addresses.filter(isIPv4).map(data =>
       ({
         type: 'A',
-        class: 'IN',
         name: question.name,
         ttl: 30,
-        flush: true,
         data
       })
     )
