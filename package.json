@@ -1,8 +1,16 @@
 {
   "name": "@krtn/dns-authoritative-server",
+  "description": "Pure JavaScript implementation of an authoritative name server",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "license": "ISC",
+  "author": "Nikita Khomyakov <dr.evil@krtn.eu>",
+  "repository": "https://github.com/krtnio/dns-authoritative-server.git",
+  "engineStrict": true,
+  "engines": {
+    "node": ">=11"
+  },
   "dependencies": {
     "dns-packet": "^5.2.1"
   }
