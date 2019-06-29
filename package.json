@@ -1,0 +1,9 @@
+{
+  "name": "@krtn/dns-authoritative-server",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "ISC",
+  "dependencies": {
+    "dns-packet": "^5.2.1"
+  }
+}
