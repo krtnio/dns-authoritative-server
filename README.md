@@ -1,9 +1,14 @@
 # DNS Authoritative Server
 
+## Installation
+```bash
+$ yarn add @krtn/dns-authoritative-server
+```
+
 ## Usage
 
 ```js
-const { TCPServer, UDPServer } = require('..')
+const { TCPServer, UDPServer } = require('@krtn/dns-authoritative-server')
 
 // (optional) restrict responder to handle only specific DNS zone
 const zone = 'myzone'
